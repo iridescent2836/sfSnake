@@ -1,0 +1,36 @@
+_deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/Context.cpp.obj: \
+ D:\codeProject\sfSnake\build\_deps\sfml-src\src\SFML\Window\Context.cpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Window/Context.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Window/Export.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Config.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Window/GlResource.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/System/NonCopyable.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/System/Export.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Window/ContextSettings.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/src/SFML/Window/GlContext.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.hpp \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/System/ThreadLocal.hpp \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/cstdlib \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/x86_64-w64-mingw32/bits/c++config.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/x86_64-w64-mingw32/bits/os_defines.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/x86_64-w64-mingw32/bits/cpu_defines.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/pstl/pstl_config.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/stdlib.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/corecrt.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/_mingw.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/_mingw_mac.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/_mingw_secapi.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/vadefs.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
+ D:/codeConfiguration/mingw64_new/lib/gcc/x86_64-w64-mingw32/13.0.1/include/limits.h \
+ D:/codeConfiguration/mingw64_new/lib/gcc/x86_64-w64-mingw32/13.0.1/include/syslimits.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/limits.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/crtdefs.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/stdlib.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/malloc.h \
+ D:/codeConfiguration/mingw64_new/lib/gcc/x86_64-w64-mingw32/13.0.1/include/mm_malloc.h \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/errno.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/std_abs.h \
+ D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/System/ThreadLocalPtr.inl

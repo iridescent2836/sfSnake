@@ -1,0 +1,1 @@
+-I"D:/codeProject/sfSnake/build/_deps/sfml-src/include" -I"D:/codeProject/sfSnake/build/_deps/sfml-src/src" -isystem "D:/codeProject/sfSnake/build/_deps/sfml-src/extlibs/headers/stb_image" -isystem "D:/codeProject/sfSnake/build/_deps/sfml-src/extlibs/headers/glad/include" -isystem "D:/codeProject/sfSnake/build/_deps/sfml-src/extlibs/headers/freetype2"
