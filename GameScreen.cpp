@@ -27,13 +27,15 @@ void GameScreen::update(sf::Time delta)
 	if (deltaFruit > 0)
 		generateFruit(deltaFruit);
 
-	snake_.update(delta);
-	snake_.checkFruitCollisions(fruit_);
+	snake_.update(delta);	//move and check collison
+	snake_.checkFruitCollisions(fruit_);	//check fruit collision and grow if needed
 
+	//goto gameover screen
 	if (snake_.hitSelf())
 		Game::Screen = std::make_shared<GameOverScreen>(snake_.getSize());
 }
 
+//no background render, only render the snake and fruit
 void GameScreen::render(sf::RenderWindow& window)
 {
 	snake_.render(window);
@@ -57,7 +59,10 @@ void GameScreen::generateFruit(int numberOfFruits)
 	for(int i = 0; i < numberOfFruits;++i){
 		int x = xDistribution(engine);
 		int y = yDistribution(engine);
-		fruit_.push_back(Fruit(sf::Vector2f(x, y)));
+		fruit_.push_back(Fruit(sf::Vector2f(x, y), x % 3));
+		// const sf::Color color = sf::Color::Blue;
+		//  fruit_.end()->setColor(color);
+		
 	}
 
 }

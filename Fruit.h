@@ -8,10 +8,11 @@ namespace sfSnake
 class Fruit
 {
 public:
-	Fruit(sf::Vector2f position = sf::Vector2f(0, 0));
+	Fruit(sf::Vector2f position = sf::Vector2f(0, 0),int color = 0);
 
 	void render(sf::RenderWindow& window);
 
+	void setColor(const sf::Color color);
 	sf::FloatRect getBounds() const;
 
 private:

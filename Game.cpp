@@ -23,6 +23,7 @@ void Game::handleInput()
 {
 	sf::Event event;
 
+	//while there is a event that haven't been dealt with, the loop continue, in this game, the only event is close event
 	while (window_.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
@@ -54,6 +55,7 @@ void Game::run()
 		sf::Time delta = clock.restart();
 		timeSinceLastUpdate += delta;
 
+		//while the timeSinceLastUpdate <= tiemPerFrame, only read input and handle it, but do not render the screen.
 		while (timeSinceLastUpdate > Game::TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;

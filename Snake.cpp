@@ -72,7 +72,7 @@ void Snake::handleInput(sf::RenderWindow& window)
 
 	
 }
-
+//move and check collisions
 void Snake::update(sf::Time delta)
 {
 	move();
