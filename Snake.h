@@ -21,7 +21,7 @@ class Snake
 public:
 	Snake();
 
-	void handleInput();
+	void handleInput(sf::RenderWindow& window);
 	void update(sf::Time delta);
 	void render(sf::RenderWindow& window);
 
@@ -41,7 +41,7 @@ private:
 	bool hitSelf_;
 
 	sf::Vector2f position_;
-	Direction direction_;
+	sf::Vector2f direction_;
 
 	sf::SoundBuffer pickupBuffer_;
 	sf::Sound pickupSound_;

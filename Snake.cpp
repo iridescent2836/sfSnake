@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <iostream>
+#include <cmath>
 
 #include "Snake.h"
 #include "Game.h"
@@ -13,11 +14,11 @@ using namespace sfSnake;
 
 const int Snake::InitialSize = 5;
 
-Snake::Snake() : direction_(Direction::Up), hitSelf_(false)
+Snake::Snake() : direction_{0, -SnakeNode::Height}, hitSelf_(false)
 {
 	initNodes();
 
-	pickupBuffer_.loadFromFile("Sounds/pickup.aiff");
+	pickupBuffer_.loadFromFile("Sounds/ji.mp3");
 	pickupSound_.setBuffer(pickupBuffer_);
 	pickupSound_.setVolume(30);
 
@@ -36,16 +37,40 @@ void Snake::initNodes()
 	}
 }
 
-void Snake::handleInput()
+void Snake::handleInput(sf::RenderWindow& window)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		direction_ = Direction::Up;
+		direction_ = {0, -SnakeNode::Height};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		direction_ = Direction::Down;
+		direction_ = {0, SnakeNode::Height};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		direction_ = Direction::Left;
+		direction_ = {-SnakeNode::Width, 0};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		direction_ = Direction::Right;
+		direction_ = {SnakeNode::Width, 0};
+
+
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)||
+	   sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	   {
+			static sf::Vector2i MousePosition;
+			static sf::Vector2f HeadPosition;
+			double directionSize;
+			
+			//get position
+			MousePosition = sf::Mouse::getPosition(window);
+			HeadPosition = nodes_[0].getPosition();
+			//caculate vector
+			sf::Vector2f directionVector{ MousePosition.x - HeadPosition.x,
+										  MousePosition.y - HeadPosition.y};
+			//caculate direction
+			directionSize = std::sqrt(
+							std::pow(directionVector.x,2) + 
+							std::pow(directionVector.y,2));
+			direction_.x = directionVector.x / directionSize * SnakeNode::Width;
+			direction_.y = directionVector.y / directionSize * SnakeNode::Height;
+	   }
+
+	
 }
 
 void Snake::update(sf::Time delta)
@@ -75,25 +100,29 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 
 void Snake::grow()
 {
-	switch (direction_)
-	{
-	case Direction::Up:
-		nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
-			nodes_[nodes_.size() - 1].getPosition().y + SnakeNode::Height)));
-		break;
-	case Direction::Down:
-		nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
-			nodes_[nodes_.size() - 1].getPosition().y - SnakeNode::Height)));
-		break;
-	case Direction::Left:
-		nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + SnakeNode::Width,
-			nodes_[nodes_.size() - 1].getPosition().y)));
-		break;
-	case Direction::Right:
-		nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x - SnakeNode::Width,
-			nodes_[nodes_.size() - 1].getPosition().y)));
-		break;
-	}
+	// switch (direction_)
+	// {
+	// case Direction::Up:
+	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
+	// 		nodes_[nodes_.size() - 1].getPosition().y + SnakeNode::Height)));
+	// 	break;
+	// case Direction::Down:
+	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
+	// 		nodes_[nodes_.size() - 1].getPosition().y - SnakeNode::Height)));
+	// 	break;
+	// case Direction::Left:
+	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + SnakeNode::Width,
+	// 		nodes_[nodes_.size() - 1].getPosition().y)));
+	// 	break;
+	// case Direction::Right:
+	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x - SnakeNode::Width,
+	// 		nodes_[nodes_.size() - 1].getPosition().y)));
+	// 	break;
+	// }
+
+
+	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + direction_.x,
+	nodes_[nodes_.size() - 1].getPosition().y + direction_.y)));
 }
 
 unsigned Snake::getSize() const
@@ -109,8 +138,8 @@ bool Snake::hitSelf() const
 void Snake::checkSelfCollisions()
 {
 	SnakeNode& headNode = nodes_[0];
-
-	for (decltype(nodes_.size()) i = 1; i < nodes_.size(); ++i)
+	//ignore the collision of head node and the first body node
+	for (decltype(nodes_.size()) i = 2; i < nodes_.size(); ++i)
 	{
 		if (headNode.getBounds().intersects(nodes_[i].getBounds()))
 		{
@@ -142,21 +171,23 @@ void Snake::move()
 		nodes_[i].setPosition(nodes_.at(i - 1).getPosition());
 	}
 
-	switch (direction_)
-	{
-	case Direction::Up:
-		nodes_[0].move(0, -SnakeNode::Height);
-		break;
-	case Direction::Down:
-		nodes_[0].move(0, SnakeNode::Height);
-		break;
-	case Direction::Left:
-		nodes_[0].move(-SnakeNode::Width, 0);
-		break;
-	case Direction::Right:
-		nodes_[0].move(SnakeNode::Width, 0);
-		break;
-	}
+	nodes_[0].move(direction_.x,direction_.y);
+
+	// switch (direction_)
+	// {
+	// case Direction::Up:
+	// 	nodes_[0].move(0, -SnakeNode::Height);
+	// 	break;
+	// case Direction::Down:
+	// 	nodes_[0].move(0, SnakeNode::Height);
+	// 	break;
+	// case Direction::Left:
+	// 	nodes_[0].move(-SnakeNode::Width, 0);
+	// 	break;
+	// case Direction::Right:
+	// 	nodes_[0].move(SnakeNode::Width, 0);
+	// 	break;
+	// }
 }
 
 void Snake::render(sf::RenderWindow& window)

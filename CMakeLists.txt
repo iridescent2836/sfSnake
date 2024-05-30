@@ -13,8 +13,14 @@ FetchContent_MakeAvailable(SFML)
 # add the folder that cmakelist is in as the src file 
 aux_source_directory(. SRC_LIST)
 add_executable(sfsnake ${SRC_LIST})
+# file(GLOB_RECURSE SOURCES "src/*.cpp")
+# add_executable(sfsnake ${SOURCES})
+
 target_link_libraries(sfsnake PRIVATE sfml-graphics sfml-audio sfml-system)
 target_compile_features(sfsnake PRIVATE cxx_std_17)
+
+
+# target_include_directories(sfsnake PRIVATE src/*)
 
 if(WIN32)
     add_custom_command(

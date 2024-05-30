@@ -266,6 +266,22 @@ CMakeFiles/sfsnake.dir/Snake.cpp.obj: D:\codeProject\sfSnake\Snake.cpp \
  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/iostream \
  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/istream \
  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/istream.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/cmath \
+ D:/codeConfiguration/mingw64_new/x86_64-w64-mingw32/include/math.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/specfun.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/limits \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/gamma.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/special_function_util.h \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/bessel_function.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/beta_function.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/ell_integral.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/exp_integral.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/hypergeometric.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/legendre_function.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/modified_bessel_func.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/poly_hermite.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/poly_laguerre.tcc \
+ D:/codeConfiguration/mingw64_new/include/c++/13.0.1/tr1/riemann_zeta.tcc \
  D:\codeProject\sfSnake\Snake.h \
  D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Audio.hpp \
  D:/codeProject/sfSnake/build/_deps/sfml-src/include/SFML/Audio/InputSoundFile.hpp \
