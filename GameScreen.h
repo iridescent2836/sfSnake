@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <random>
+
 #include "Screen.h"
 #include "Snake.h"
 #include "Fruit.h"
@@ -18,11 +20,14 @@ public:
 	void update(sf::Time delta) override;
 	void render(sf::RenderWindow& window) override;
 
-	void generateFruit();
+	void generateFruit(int numberOfFruits);
 
 private:
 	Snake snake_;
 	std::vector<Fruit> fruit_;
+	static std::default_random_engine engine;
+	static std::uniform_int_distribution<int> xDistribution;
+	static std::uniform_int_distribution<int> yDistribution;
 };
 }
 

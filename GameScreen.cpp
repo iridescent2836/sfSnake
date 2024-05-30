@@ -21,8 +21,11 @@ void GameScreen::handleInput(sf::RenderWindow& window)
 
 void GameScreen::update(sf::Time delta)
 {
-	if (fruit_.size() == 0)
-		generateFruit();
+
+	static int numberOfFruit = 10;
+	int deltaFruit = numberOfFruit - fruit_.size();
+	if (deltaFruit > 0)
+		generateFruit(deltaFruit);
 
 	snake_.update(delta);
 	snake_.checkFruitCollisions(fruit_);
@@ -39,13 +42,23 @@ void GameScreen::render(sf::RenderWindow& window)
 		fruit.render(window);
 }
 
-void GameScreen::generateFruit()
-{
-	static std::default_random_engine engine;
-	engine.seed(time(NULL));
-	static std::uniform_int_distribution<int> xDistribution(0, Game::Width - SnakeNode::Width);
-	static std::uniform_int_distribution<int> yDistribution(0, Game::Height - SnakeNode::Height);
+std::default_random_engine GameScreen::engine(time(nullptr));
+std::uniform_int_distribution<int> GameScreen::xDistribution(0, Game::Width - SnakeNode::Width);
+std::uniform_int_distribution<int> GameScreen::yDistribution(0, Game::Height - SnakeNode::Height);
 
-	fruit_.push_back(Fruit(sf::Vector2f(xDistribution(engine), yDistribution(engine))));
+void GameScreen::generateFruit(int numberOfFruits)
+{
+	// static std::default_random_engine engine;
+	// engine.seed(time(NULL));
+	// static std::uniform_int_distribution<int> xDistribution(0, Game::Width - SnakeNode::Width);
+	// static std::uniform_int_distribution<int> yDistribution(0, Game::Height - SnakeNode::Height);
+
+	// fruit_.push_back(Fruit(sf::Vector2f(xDistribution(engine), yDistribution(engine))));
+	for(int i = 0; i < numberOfFruits;++i){
+		int x = xDistribution(engine);
+		int y = yDistribution(engine);
+		fruit_.push_back(Fruit(sf::Vector2f(x, y)));
+	}
+
 }
 

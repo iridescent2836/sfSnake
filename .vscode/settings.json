@@ -2,6 +2,7 @@
     "explorer.excludeGitIgnore": false,
     "explorer.fileNesting.enabled": false,
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "random": "cpp"
     }
 }
