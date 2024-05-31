@@ -1153,6 +1153,9 @@ CMakeFiles/sfsnake.dir/GameScreen.cpp.obj: D:/codeProject/sfSnake/GameScreen.cpp
   D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/atomic_lockfree_defines.h \
   D:/codeConfiguration/mingw64_new/include/c++/13.0.1/backward/auto_ptr.h \
   D:/codeConfiguration/mingw64_new/include/c++/13.0.1/pstl/glue_memory_defs.h \
+  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/iostream \
+  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/istream \
+  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/istream.tcc \
   D:/codeProject/sfSnake/GameScreen.h \
   D:/codeProject/sfSnake/Screen.h \
   D:/codeProject/sfSnake/Snake.h \

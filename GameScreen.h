@@ -25,6 +25,11 @@ public:
 private:
 	Snake snake_;
 	std::vector<Fruit> fruit_;
+
+	sf::Text scores_;
+	sf::Font font_;
+
+
 	static std::default_random_engine engine;
 	static std::uniform_int_distribution<int> xDistribution;
 	static std::uniform_int_distribution<int> yDistribution;

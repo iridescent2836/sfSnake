@@ -33,9 +33,14 @@ void Fruit::render(sf::RenderWindow& window)
 }
 
 void Fruit::setColor(const sf::Color color){
-	this->shape_.setFillColor(color);
+	shape_.setFillColor(color);
 }
 
+
+const sf::Color &Fruit::getColor() const
+{
+	return shape_.getFillColor();
+}
 
 sf::FloatRect Fruit::getBounds() const
 {

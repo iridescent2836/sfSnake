@@ -29,6 +29,8 @@ public:
 
 	bool hitSelf() const;
 
+	int getScores() const;
+
 	unsigned getSize() const;
 
 private:
@@ -50,6 +52,8 @@ private:
 	sf::Sound dieSound_;
 
 	std::vector<SnakeNode> nodes_;
+
+	int scores_;
 
 	static const int InitialSize;
 };

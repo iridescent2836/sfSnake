@@ -13,6 +13,7 @@ public:
 	void render(sf::RenderWindow& window);
 
 	void setColor(const sf::Color color);
+	const sf::Color & getColor() const;
 	sf::FloatRect getBounds() const;
 
 private:

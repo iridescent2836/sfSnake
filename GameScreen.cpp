@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
 
 #include <random>
+#include <string>
 #include <memory>
+#include <iostream>
 
 #include "GameScreen.h"
 #include "GameOverScreen.h"
@@ -11,6 +13,14 @@ using namespace sfSnake;
 
 GameScreen::GameScreen() : snake_()
 {
+	font_.loadFromFile("Fonts/game_over.ttf");
+
+	scores_.setFont(font_);
+	scores_.setString("SCORE:" + std::to_string(snake_.getScores()));
+	scores_.setFillColor(sf::Color::Yellow);
+	// std::cout << (Game::Width - scores_.getString().getSize()) / 2.0f << std::endl;
+	scores_.setCharacterSize(Game::Width / 25.0f);
+	scores_.setPosition((Game::Width - scores_.getString().getSize() * scores_.getCharacterSize()) / 2.0f , Game::Height / 20.0f);
 
 }
 
@@ -32,7 +42,10 @@ void GameScreen::update(sf::Time delta)
 
 	//goto gameover screen
 	if (snake_.hitSelf())
-		Game::Screen = std::make_shared<GameOverScreen>(snake_.getSize());
+		Game::Screen = std::make_shared<GameOverScreen>(snake_.getScores());
+
+	scores_.setString("SCORE:" + std::to_string(snake_.getScores()));
+	
 }
 
 //no background render, only render the snake and fruit
@@ -42,6 +55,8 @@ void GameScreen::render(sf::RenderWindow& window)
 
 	for (auto fruit : fruit_)
 		fruit.render(window);
+
+	window.draw(scores_);
 }
 
 std::default_random_engine GameScreen::engine(time(nullptr));
@@ -62,6 +77,7 @@ void GameScreen::generateFruit(int numberOfFruits)
 		fruit_.push_back(Fruit(sf::Vector2f(x, y), x % 3));
 		// const sf::Color color = sf::Color::Blue;
 		//  fruit_.end()->setColor(color);
+		// fruit_[fruit_.size()-1].setColor(sf::Color::Red);
 		
 	}
 

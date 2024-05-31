@@ -25,6 +25,8 @@ Snake::Snake() : direction_{0, -SnakeNode::Height}, hitSelf_(false)
 	dieBuffer_.loadFromFile("Sounds/die.wav");
 	dieSound_.setBuffer(dieBuffer_);
 	dieSound_.setVolume(50);
+
+	scores_ = 0;
 }
 
 void Snake::initNodes()
@@ -93,6 +95,16 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 	if (toRemove != fruits.end())
 	{
 		pickupSound_.play();
+		const sf::Color & color = toRemove->getColor();
+		if(color == sf::Color::Red){
+			++scores_;
+		}
+		else if(color == sf::Color::Blue){
+			scores_ += 2;
+		}
+		else if(color == sf::Color::Magenta){
+			scores_ += 3;
+		}
 		grow();
 		fruits.erase(toRemove);
 	}
@@ -188,6 +200,12 @@ void Snake::move()
 	// 	nodes_[0].move(SnakeNode::Width, 0);
 	// 	break;
 	// }
+}
+
+
+int Snake::getScores() const
+{
+	return scores_;
 }
 
 void Snake::render(sf::RenderWindow& window)
