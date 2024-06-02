@@ -46,3 +46,11 @@ sf::FloatRect Fruit::getBounds() const
 {
 	return shape_.getGlobalBounds();
 }
+
+const sf::Vector2f &Fruit::getPosition() const{
+	return shape_.getPosition();
+}
+
+float Fruit::getRadius() const{
+	return shape_.getRadius();
+}

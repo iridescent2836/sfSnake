@@ -40,6 +40,8 @@ private:
 	void checkSelfCollisions();
 	void initNodes();
 
+	void setTexture(sf::CircleShape& node, bool isHead);
+
 	bool hitSelf_;
 
 	sf::Vector2f position_;
@@ -51,7 +53,16 @@ private:
 	sf::SoundBuffer dieBuffer_;
 	sf::Sound dieSound_;
 
-	std::vector<SnakeNode> nodes_;
+	//std::vector<SnakeNode> nodes_;
+	std::vector<sf::CircleShape> nodes_;
+
+	sf::Sprite test_;
+
+	sf::Texture headTexture_;
+	sf::Texture bodyTexture_;
+
+	float radius_ = 10.0f;
+	
 
 	int scores_;
 

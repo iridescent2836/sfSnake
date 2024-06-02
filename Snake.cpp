@@ -14,7 +14,9 @@ using namespace sfSnake;
 
 const int Snake::InitialSize = 5;
 
-Snake::Snake() : direction_{0, -SnakeNode::Height}, hitSelf_(false)
+
+//Here we directly use -20.0f instead of 2*radius_ because using radius_ during construction will cause a bug.
+Snake::Snake() : direction_{0, -20.0f}, hitSelf_(false)
 {
 	initNodes();
 
@@ -26,29 +28,53 @@ Snake::Snake() : direction_{0, -SnakeNode::Height}, hitSelf_(false)
 	dieSound_.setBuffer(dieBuffer_);
 	dieSound_.setVolume(50);
 
+	//set texture
+	headTexture_.loadFromFile("texture/test1.jpg");
+	bodyTexture_.loadFromFile("texture/test1.jpg");
+
+
 	scores_ = 0;
+}
+
+void Snake::setTexture(sf::CircleShape& node, bool isHead){
+	if(isHead){
+		node.setTexture(&headTexture_);
+	}
+	else{
+		node.setTexture(&bodyTexture_);
+	}
+
+
 }
 
 void Snake::initNodes()
 {
 	for (int i = 0; i < Snake::InitialSize; ++i)
 	{
-		nodes_.push_back(SnakeNode(sf::Vector2f(
-			Game::Width / 2 - SnakeNode::Width / 2,
-			Game::Height / 2 - (SnakeNode::Height / 2) + (SnakeNode::Height * i))));
+		nodes_.push_back(sf::CircleShape {radius_});
+		nodes_[i].setPosition(Game::Width / 2.0f - radius_ ,
+							  Game::Height / 2.0f - radius_ + radius_* 2 * i);
+		
+		setTexture(nodes_[i], !i);
 	}
+
+
+
+	// //set test in the position of head
+	// test_.setPosition(nodes_[0].getPosition());
 }
 
 void Snake::handleInput(sf::RenderWindow& window)
 {
+	float distance = radius_+radius_;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		direction_ = {0, -SnakeNode::Height};
+		direction_ = {0, -distance};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		direction_ = {0, SnakeNode::Height};
+		direction_ = {0, distance};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		direction_ = {-SnakeNode::Width, 0};
+		direction_ = {-distance, 0};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		direction_ = {SnakeNode::Width, 0};
+		direction_ = {distance, 0};
 
 
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)||
@@ -68,8 +94,8 @@ void Snake::handleInput(sf::RenderWindow& window)
 			directionSize = std::sqrt(
 							std::pow(directionVector.x,2) + 
 							std::pow(directionVector.y,2));
-			direction_.x = directionVector.x / directionSize * SnakeNode::Width;
-			direction_.y = directionVector.y / directionSize * SnakeNode::Height;
+			direction_.x = directionVector.x / directionSize * distance;
+			direction_.y = directionVector.y / directionSize * distance;
 	   }
 
 	
@@ -82,13 +108,20 @@ void Snake::update(sf::Time delta)
 	checkSelfCollisions();
 }
 
+inline float dis(const sf::Vector2f & node1,const sf::Vector2f & node2){
+	return std::sqrt(std::pow(static_cast<double>(node1.x - node2.x),2) + 
+					 std::pow(static_cast<double>(node1.y - node2.y),2));
+}
+
+
 void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 {
 	decltype(fruits.begin()) toRemove = fruits.end();
 
+
 	for (auto it = fruits.begin(); it != fruits.end() ; ++it)
 	{
-		if (it->getBounds().intersects(nodes_[0].getBounds()))
+		if (dis(it->getPosition(),nodes_[0].getPosition()) < it->getRadius() + radius_)
 			toRemove = it;
 	}
 
@@ -107,7 +140,7 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 		}
 		//an egg.
 		else if(color == sf::Color::Yellow){
-			scores_ += 20;
+			scores_ += 50;
 		}
 		grow();
 		fruits.erase(toRemove);
@@ -137,8 +170,15 @@ void Snake::grow()
 	// }
 
 
+/*
 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + direction_.x,
 	nodes_[nodes_.size() - 1].getPosition().y + direction_.y)));
+
+*/
+
+	nodes_.push_back(sf::CircleShape{radius_});
+	sf::Vector2f posOfLastNode = nodes_[nodes_.size() - 2].getPosition();
+	nodes_[nodes_.size() - 1].setPosition(posOfLastNode.x + direction_.x,posOfLastNode.y+direction_.y);
 }
 
 unsigned Snake::getSize() const
@@ -153,11 +193,11 @@ bool Snake::hitSelf() const
 
 void Snake::checkSelfCollisions()
 {
-	SnakeNode& headNode = nodes_[0];
+	sf::CircleShape& headNode = nodes_[0];
 	//ignore the collision of head node and the first body node
 	for (decltype(nodes_.size()) i = 2; i < nodes_.size(); ++i)
 	{
-		if (headNode.getBounds().intersects(nodes_[i].getBounds()))
+		if (dis(headNode.getPosition(),nodes_[i].getPosition()) < radius_ + radius_)
 		{
 			dieSound_.play();
 			sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
@@ -168,7 +208,7 @@ void Snake::checkSelfCollisions()
 
 void Snake::checkEdgeCollisions()
 {
-	SnakeNode& headNode = nodes_[0];
+	sf::CircleShape& headNode = nodes_[0];
 
 	if (headNode.getPosition().x <= 0)
 		headNode.setPosition(Game::Width, headNode.getPosition().y);
@@ -188,7 +228,6 @@ void Snake::move()
 	}
 
 	nodes_[0].move(direction_.x,direction_.y);
-
 	// switch (direction_)
 	// {
 	// case Direction::Up:
@@ -215,5 +254,6 @@ int Snake::getScores() const
 void Snake::render(sf::RenderWindow& window)
 {
 	for (auto node : nodes_)
-		node.render(window);
+		window.draw(node);
+	// window.draw(test_);
 }
