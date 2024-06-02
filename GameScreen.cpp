@@ -36,6 +36,13 @@ void GameScreen::update(sf::Time delta)
 	int deltaFruit = numberOfFruit - fruit_.size();
 	if (deltaFruit > 0)
 		generateFruit(deltaFruit);
+	static bool is_egg = true;
+	//an egg
+	if(snake_.getScores() >= 10 && is_egg){
+		generateFruit(1);
+		fruit_[fruit_.size() - 1].setColor(sf::Color::Yellow);
+		is_egg = false;
+	}
 
 	snake_.update(delta);	//move and check collison
 	snake_.checkFruitCollisions(fruit_);	//check fruit collision and grow if needed

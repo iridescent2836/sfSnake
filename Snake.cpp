@@ -105,6 +105,10 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 		else if(color == sf::Color::Magenta){
 			scores_ += 3;
 		}
+		//an egg.
+		else if(color == sf::Color::Yellow){
+			scores_ += 20;
+		}
 		grow();
 		fruits.erase(toRemove);
 	}
