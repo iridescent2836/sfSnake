@@ -124,8 +124,14 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 
 	for (auto it = fruits.begin(); it != fruits.end() ; ++it)
 	{
-		if (dis(it->getPosition(),nodes_[0].getPosition()) < it->getRadius() + radius_)
+		//this cost too much resources 
+		// if (dis(it->getPosition(),nodes_[0].getPosition()) < it->getRadius() + radius_)
+		// 	toRemove = it;
+
+		//cost less resource and less accurate but more easy.
+		if(it->getBounds().intersects(nodes_[0].getGlobalBounds())){
 			toRemove = it;
+		}
 	}
 
 	if (toRemove != fruits.end())
@@ -200,6 +206,10 @@ void Snake::checkSelfCollisions()
 	//ignore the collision of head node and the first body node
 	for (decltype(nodes_.size()) i = 2; i < nodes_.size(); ++i)
 	{
+		// cost less resource but less accurate
+		// if(headNode.getGlobalBounds().intersects(nodes_[i].getGlobalBounds()))
+
+		//cost more resource but more accurate
 		if (dis(headNode.getPosition(),nodes_[i].getPosition()) < radius_ + radius_)
 		{
 			dieSound_.play();
