@@ -16,7 +16,8 @@ const int Snake::InitialSize = 5;
 
 
 //Here we directly use -20.0f instead of 2*radius_ because using radius_ during construction will cause a bug.
-Snake::Snake() : direction_{0, -20.0f}, hitSelf_(false)
+//*0.8 is to ensure that the nodes partially overlap with each other; otherwise, it would look too unnatural.
+Snake::Snake() : direction_{0, -20.0f * 0.8}, radius_(10.0f) ,hitSelf_(false)
 {
 	initNodes();
 
@@ -66,7 +67,9 @@ void Snake::initNodes()
 
 void Snake::handleInput(sf::RenderWindow& window)
 {
-	float distance = radius_+radius_;
+
+	//*0.8 is to ensure that the nodes partially overlap with each other; otherwise, it would look too unnatural.
+	float distance = (radius_+radius_) * 0.8;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		direction_ = {0, -distance};
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))

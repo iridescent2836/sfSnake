@@ -56,12 +56,11 @@ private:
 	//std::vector<SnakeNode> nodes_;
 	std::vector<sf::CircleShape> nodes_;
 
-	sf::Sprite test_;
 
 	sf::Texture headTexture_;
 	sf::Texture bodyTexture_;
 
-	float radius_ = 10.0f;
+	float radius_;
 	
 
 	int scores_;
