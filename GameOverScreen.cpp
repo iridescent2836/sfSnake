@@ -22,6 +22,13 @@ GameOverScreen::GameOverScreen(std::size_t score) : score_(score)
 	text_.setOrigin(textBounds.left + textBounds.width / 2,
 		textBounds.top + textBounds.height / 2);
 	text_.setPosition(Game::Width / 2, Game::Height / 2);
+
+	if (!backgroundTexture_.loadFromFile("Backgrounds/menu.png")){
+		std::cerr << "Failed to load background texture" << std::endl;
+	}
+	backgroundSprite_.setTexture(backgroundTexture_);
+	backgroundSprite_.setScale(Game::Width / float(backgroundTexture_.getSize().x), Game::Height / float(backgroundTexture_.getSize().y));
+	backgroundSprite_.setPosition(0, 0);
 }
 
 void GameOverScreen::handleInput(sf::RenderWindow& window)
@@ -41,5 +48,6 @@ void GameOverScreen::update(sf::Time delta)
 
 void GameOverScreen::render(sf::RenderWindow& window)
 {
+	window.draw(backgroundSprite_);
 	window.draw(text_);
 }

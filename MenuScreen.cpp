@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <memory>
+#include <iostream>
 
 #include "GameScreen.h"
 #include "MenuScreen.h"
@@ -31,6 +32,13 @@ MenuScreen::MenuScreen()
 	snakeText_.setOrigin(snakeTextBounds.left + snakeTextBounds.width / 2,
 		snakeTextBounds.top + snakeTextBounds.height / 2);
 	snakeText_.setPosition(Game::Width / 2, Game::Height / 4);
+
+	if (!backgroundTexture_.loadFromFile("Backgrounds/menu.png")){
+		std::cerr << "Failed to load background texture" << std::endl;
+	}
+	backgroundSprite_.setTexture(backgroundTexture_);
+	backgroundSprite_.setScale(Game::Width / float(backgroundTexture_.getSize().x), Game::Height / float(backgroundTexture_.getSize().y));
+	backgroundSprite_.setPosition(0, 0);
 }
 
 void MenuScreen::handleInput(sf::RenderWindow& window)
@@ -71,6 +79,7 @@ void MenuScreen::update(sf::Time delta)
 
 void MenuScreen::render(sf::RenderWindow& window)
 {
+	window.draw(backgroundSprite_);
 	window.draw(text_);
 	window.draw(snakeText_);
 }

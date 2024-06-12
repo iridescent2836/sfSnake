@@ -17,6 +17,7 @@ const int Snake::InitialSize = 5;
 
 //Here we directly use -20.0f instead of 2*radius_ because using radius_ during construction will cause a bug.
 //*0.8 is to ensure that the nodes partially overlap with each other; otherwise, it would look too unnatural.
+// this *0.8 also occurs in the handleinput.
 Snake::Snake() : direction_{0, -20.0f * 0.8}, radius_(10.0f) ,hitSelf_(false)
 {
 	initNodes();
@@ -29,9 +30,9 @@ Snake::Snake() : direction_{0, -20.0f * 0.8}, radius_(10.0f) ,hitSelf_(false)
 	dieSound_.setBuffer(dieBuffer_);
 	dieSound_.setVolume(50);
 
-	//set texture
+	//load texture
 	headTexture_.loadFromFile("texture/test1.jpg");
-	bodyTexture_.loadFromFile("texture/test1.jpg");
+	bodyTexture_.loadFromFile("texture/test2.png");
 
 
 	scores_ = 0;
@@ -69,6 +70,7 @@ void Snake::handleInput(sf::RenderWindow& window)
 {
 
 	//*0.8 is to ensure that the nodes partially overlap with each other; otherwise, it would look too unnatural.
+	//this *0.8 also occurs in the constuctor.
 	float distance = (radius_+radius_) * 0.8;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		direction_ = {0, -distance};
@@ -188,6 +190,7 @@ void Snake::grow()
 	nodes_.push_back(sf::CircleShape{radius_});
 	sf::Vector2f posOfLastNode = nodes_[nodes_.size() - 2].getPosition();
 	nodes_[nodes_.size() - 1].setPosition(posOfLastNode.x + direction_.x,posOfLastNode.y+direction_.y);
+	setTexture(nodes_[nodes_.size() - 1], 0);
 }
 
 unsigned Snake::getSize() const

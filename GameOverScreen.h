@@ -21,6 +21,9 @@ private:
 	sf::Text text_;
 
 	unsigned score_;
+
+	sf::Texture backgroundTexture_;
+	sf::Sprite backgroundSprite_;
 };
 }
 
