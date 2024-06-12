@@ -61,8 +61,10 @@ private:
 	sf::Texture bodyTexture_;
 
 	float radius_;
-	
 
+	sf::Sprite test;
+
+	
 	int scores_;
 
 	static const int InitialSize;

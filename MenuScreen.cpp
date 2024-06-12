@@ -12,15 +12,23 @@ using namespace sfSnake;
 MenuScreen::MenuScreen()
 {
 	font_.loadFromFile("Fonts/game_over.ttf");
+
 	text_.setFont(font_);
 	text_.setString(
-		"\n\n\n\n\n\n\n\n\nPress [SPACE] to play"
+		"\n\n\n\n\n\n\nPress [SPACE] to play"
 		"\n\nPress [ESC] to quit");
+	text_.setFillColor(sf::Color::White);
+	text_.setOutlineColor(sf::Color::Black);
+	text_.setOutlineThickness(2);
+	text_.setCharacterSize(Game::Width / 25);
+	text_.setStyle(sf::Text::Bold);
 
 	snakeText_.setFont(font_);
 	snakeText_.setString("Snake!");
-	snakeText_.setFillColor(sf::Color::Green);
-	snakeText_.setCharacterSize(64);
+	snakeText_.setFillColor(sf::Color::White);
+	snakeText_.setOutlineColor(sf::Color::Black);
+	snakeText_.setOutlineThickness(2);
+	snakeText_.setCharacterSize(Game::Width / 10);
 	snakeText_.setStyle(sf::Text::Bold);
 
 	sf::FloatRect textBounds = text_.getLocalBounds();
@@ -33,7 +41,8 @@ MenuScreen::MenuScreen()
 		snakeTextBounds.top + snakeTextBounds.height / 2);
 	snakeText_.setPosition(Game::Width / 2, Game::Height / 4);
 
-	if (!backgroundTexture_.loadFromFile("Backgrounds/menu.png")){
+	// set up background
+	if (!backgroundTexture_.loadFromFile("Backgrounds/background1.png")){
 		std::cerr << "Failed to load background texture" << std::endl;
 	}
 	backgroundSprite_.setTexture(backgroundTexture_);

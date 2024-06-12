@@ -17,11 +17,18 @@ GameScreen::GameScreen() : snake_()
 
 	scores_.setFont(font_);
 	scores_.setString("SCORE:" + std::to_string(snake_.getScores()));
-	scores_.setFillColor(sf::Color::Yellow);
+	scores_.setFillColor(sf::Color::White);
+	scores_.setOutlineColor(sf::Color::Black);
+	scores_.setOutlineThickness(2.0f);
+	scores_.setStyle(sf::Text::Bold);
 	// std::cout << (Game::Width - scores_.getString().getSize()) / 2.0f << std::endl;
 	scores_.setCharacterSize(Game::Width / 25.0f);
 	scores_.setPosition((Game::Width - scores_.getString().getSize() * scores_.getCharacterSize()) / 2.0f , Game::Height / 20.0f);
 
+	//set background
+	backgroundTexture_.loadFromFile("Backgrounds/grid2.png");
+	background_.setTexture(backgroundTexture_);
+	background_.setPosition(0,0);
 }
 
 void GameScreen::handleInput(sf::RenderWindow& window)
@@ -58,12 +65,32 @@ void GameScreen::update(sf::Time delta)
 //no background render, only render the snake and fruit
 void GameScreen::render(sf::RenderWindow& window)
 {
+	// draw background
+	int backgroundWidth = backgroundTexture_.getSize().x;
+	int backgroundHeight = backgroundTexture_.getSize().y;
+
+	int numCols = Game::Width / backgroundWidth + 1;
+	int numRows = Game::Height / backgroundHeight + 1;
+
+	for (int i = 0; i < numCols; ++i)
+	{
+		for (int j = 0; j < numRows; ++j)	//draw background
+		{
+			
+			background_.setPosition(i * backgroundWidth, j * backgroundHeight);
+			window.draw(background_);
+		}
+	}
+	// window.draw(background_);
+
+
 	snake_.render(window);
 
 	for (auto fruit : fruit_)
 		fruit.render(window);
 
 	window.draw(scores_);
+
 }
 
 std::default_random_engine GameScreen::engine(time(nullptr));

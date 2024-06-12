@@ -22,6 +22,12 @@ private:
 	sf::Text text_;
 	sf::Texture backgroundTexture_;
 	sf::Sprite backgroundSprite_;
+
+
+	bool isGameScreenBotton1Pressed_ = false;
+	bool isGameScreenBotton2Pressed_ = false;
+	bool isSnakeButton1Pressed_ = false;
+	bool isSnakeButton2Pressed_ = false;
 };
 }
 

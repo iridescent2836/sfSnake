@@ -16,14 +16,18 @@ GameOverScreen::GameOverScreen(std::size_t score) : score_(score)
 	text_.setString("Your score: " + std::to_string(score) + "!"
 		"\n\nPress [SPACE] to retry"
 		"\n\nPress [ESC] to quit");
-	text_.setFillColor(sf::Color::Red);
+	text_.setFillColor(sf::Color::White);
+	text_.setCharacterSize(Game::Width / 20);
+	text_.setOutlineColor(sf::Color::Black);
+	text_.setOutlineThickness(2);
+	text_.setStyle(sf::Text::Bold);
 
 	sf::FloatRect textBounds = text_.getLocalBounds();
 	text_.setOrigin(textBounds.left + textBounds.width / 2,
 		textBounds.top + textBounds.height / 2);
 	text_.setPosition(Game::Width / 2, Game::Height / 2);
 
-	if (!backgroundTexture_.loadFromFile("Backgrounds/menu.png")){
+	if (!backgroundTexture_.loadFromFile("Backgrounds/background1.png")){
 		std::cerr << "Failed to load background texture" << std::endl;
 	}
 	backgroundSprite_.setTexture(backgroundTexture_);

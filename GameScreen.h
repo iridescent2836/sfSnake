@@ -30,6 +30,9 @@ private:
 	sf::Font font_;
 
 
+	sf::Sprite background_;
+	sf::Texture backgroundTexture_;
+
 	static std::default_random_engine engine;
 	static std::uniform_int_distribution<int> xDistribution;
 	static std::uniform_int_distribution<int> yDistribution;

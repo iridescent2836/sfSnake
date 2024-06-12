@@ -18,9 +18,8 @@ const int Snake::InitialSize = 5;
 //Here we directly use -20.0f instead of 2*radius_ because using radius_ during construction will cause a bug.
 //*0.8 is to ensure that the nodes partially overlap with each other; otherwise, it would look too unnatural.
 // this *0.8 also occurs in the handleinput.
-Snake::Snake() : direction_{0, -20.0f * 0.8}, radius_(10.0f) ,hitSelf_(false)
+Snake::Snake() : direction_{0, -40.0f * 0.8}, radius_(20.0f) ,hitSelf_(false)
 {
-	initNodes();
 
 	pickupBuffer_.loadFromFile("Sounds/ji.mp3");
 	pickupSound_.setBuffer(pickupBuffer_);
@@ -31,8 +30,13 @@ Snake::Snake() : direction_{0, -20.0f * 0.8}, radius_(10.0f) ,hitSelf_(false)
 	dieSound_.setVolume(50);
 
 	//load texture
-	headTexture_.loadFromFile("texture/test1.jpg");
-	bodyTexture_.loadFromFile("texture/test2.png");
+	headTexture_.loadFromFile("texture/head1.png");
+	bodyTexture_.loadFromFile("texture/body.png");
+
+	test.setTexture(headTexture_);
+	test.setPosition(0,0);
+
+	initNodes();
 
 
 	scores_ = 0;
@@ -56,6 +60,7 @@ void Snake::initNodes()
 		nodes_.push_back(sf::CircleShape {radius_});
 		nodes_[i].setPosition(Game::Width / 2.0f - radius_ ,
 							  Game::Height / 2.0f - radius_ + radius_* 2 * i);
+		nodes_[i].setOrigin(radius_, radius_);
 		
 		setTexture(nodes_[i], !i);
 	}
@@ -160,36 +165,17 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 
 void Snake::grow()
 {
-	// switch (direction_)
-	// {
-	// case Direction::Up:
-	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
-	// 		nodes_[nodes_.size() - 1].getPosition().y + SnakeNode::Height)));
-	// 	break;
-	// case Direction::Down:
-	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x,
-	// 		nodes_[nodes_.size() - 1].getPosition().y - SnakeNode::Height)));
-	// 	break;
-	// case Direction::Left:
-	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + SnakeNode::Width,
-	// 		nodes_[nodes_.size() - 1].getPosition().y)));
-	// 	break;
-	// case Direction::Right:
-	// 	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x - SnakeNode::Width,
-	// 		nodes_[nodes_.size() - 1].getPosition().y)));
-	// 	break;
-	// }
 
-
-/*
-	nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x + direction_.x,
-	nodes_[nodes_.size() - 1].getPosition().y + direction_.y)));
-
-*/
 
 	nodes_.push_back(sf::CircleShape{radius_});
 	sf::Vector2f posOfLastNode = nodes_[nodes_.size() - 2].getPosition();
-	nodes_[nodes_.size() - 1].setPosition(posOfLastNode.x + direction_.x,posOfLastNode.y+direction_.y);
+	sf::Vector2f PosOfLastLastNode = nodes_[nodes_.size() - 3].getPosition();
+	// float direction = nodes_[nodes_.size() - 2].getRotation() * 3.14159265358979323846 / 180 + 3.14159265358979323846 / 2;
+	// int distance = (radius_ + radius_) * 0.8;
+	// nodes_[nodes_.size() - 1].setPosition(posOfLastNode.x - distance*std::cos(direction),posOfLastNode.y-distance*std::sin(direction));
+	nodes_[nodes_.size() - 1].setPosition(posOfLastNode.x,posOfLastNode.y);
+	nodes_[nodes_.size() - 1].setOrigin(radius_, radius_);
+	nodes_[nodes_.size() - 1].setRotation(nodes_[nodes_.size() - 2].getRotation());
 	setTexture(nodes_[nodes_.size() - 1], 0);
 }
 
@@ -241,9 +227,11 @@ void Snake::move()
 	for (decltype(nodes_.size()) i = nodes_.size() - 1; i > 0; --i)
 	{
 		nodes_[i].setPosition(nodes_.at(i - 1).getPosition());
+		nodes_[i].setRotation(nodes_.at(i - 1).getRotation());
 	}
 
 	nodes_[0].move(direction_.x,direction_.y);
+	nodes_[0].setRotation(std::atan2(direction_.y,direction_.x)  * 180 / 3.14159265358979323846 + 90);
 	// switch (direction_)
 	// {
 	// case Direction::Up:
@@ -269,7 +257,8 @@ int Snake::getScores() const
 
 void Snake::render(sf::RenderWindow& window)
 {
+		// window.draw(test);
+
 	for (auto node : nodes_)
 		window.draw(node);
-	// window.draw(test_);
 }
