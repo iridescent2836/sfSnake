@@ -33,8 +33,25 @@ Snake::Snake() : direction_{0, -40.0f * 0.8}, radius_(20.0f) ,hitSelf_(false)
 	headTexture_.loadFromFile("texture/head1.png");
 	bodyTexture_.loadFromFile("texture/body.png");
 
-	test.setTexture(headTexture_);
-	test.setPosition(0,0);
+
+
+	//set scarf
+	scarfTexture_.loadFromFile("texture/scarf.png");
+	scarfSize_ = {radius_/2.0f, radius_*1.8f};
+
+	scarf_.setTexture(scarfTexture_);
+	// scarf_.setScale(scarfSize_.x, scarfSize_.y);
+	scarf_.setScale(radius_/scarfTexture_.getSize().x/2.4f, radius_*1.1/scarfTexture_.getSize().y*2.0f);
+	scarf_.setOrigin(scarf_.getTextureRect().width/2.0f, scarf_.getTextureRect().height/2.0f);
+
+	scarfHead_.setTexture(scarfTexture_);
+	// scarfHead_.setScale(scarfSize_.y, scarfSize_.x);
+	scarfHead_.setScale(radius_/scarfTexture_.getSize().x*1.8f, radius_/scarfTexture_.getSize().y/2.0f);
+	scarfHead_.setOrigin(scarfHead_.getTextureRect().width/2.0f, scarfHead_.getTextureRect().height/2.0f);
+
+
+
+
 
 	initNodes();
 
@@ -199,7 +216,7 @@ void Snake::checkSelfCollisions()
 		// if(headNode.getGlobalBounds().intersects(nodes_[i].getGlobalBounds()))
 
 		//cost more resource but more accurate
-		if (dis(headNode.getPosition(),nodes_[i].getPosition()) < radius_ + radius_)
+		if (dis(headNode.getPosition(),nodes_[i].getPosition()) < radius_ * 1.5)
 		{
 			dieSound_.play();
 			sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
@@ -232,6 +249,14 @@ void Snake::move()
 
 	nodes_[0].move(direction_.x,direction_.y);
 	nodes_[0].setRotation(std::atan2(direction_.y,direction_.x)  * 180 / 3.14159265358979323846 + 90);
+
+	//让scarfHead在head的头的带方向的正下方
+	float degree = nodes_[0].getRotation()/180.0f*3.14159265358979323846 + 3.14159265358979323846/2;
+	scarfHead_.setPosition(nodes_[0].getPosition().x+(radius_ - scarfSize_.x/3.2f)*std::cos(degree),
+						   nodes_[0].getPosition().y+(radius_ - scarfSize_.x/3.2f)*std::sin(degree));
+
+	scarfHead_.setRotation(nodes_[0].getRotation());
+
 	// switch (direction_)
 	// {
 	// case Direction::Up:
@@ -258,7 +283,19 @@ int Snake::getScores() const
 void Snake::render(sf::RenderWindow& window)
 {
 		// window.draw(test);
-
 	for (auto node : nodes_)
 		window.draw(node);
+	//draw scarf
+	window.draw(scarfHead_);
+
+	for(int i = 1; i < nodes_.size(); ++i){
+		//让scarfHead在head的头的带方向的正右方
+		float degree = nodes_[i].getRotation()/180.0f*3.14159265358979323846 ;
+		scarf_.setPosition(nodes_[i].getPosition().x+(radius_*0.5 )*std::cos(degree),
+							nodes_[i].getPosition().y+(radius_*0.5 )*std::sin(degree));
+
+		scarf_.setRotation(nodes_[i].getRotation());
+		window.draw(scarf_);
+	}
+
 }

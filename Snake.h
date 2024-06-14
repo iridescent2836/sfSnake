@@ -53,16 +53,21 @@ private:
 	sf::SoundBuffer dieBuffer_;
 	sf::Sound dieSound_;
 
+
 	//std::vector<SnakeNode> nodes_;
 	std::vector<sf::CircleShape> nodes_;
 
+	sf::Sprite scarf_;
+	sf::Sprite scarfHead_;
+	sf::Texture scarfTexture_;
+
+	sf::Vector2f scarfSize_; //x 是宽，y 是长
 
 	sf::Texture headTexture_;
 	sf::Texture bodyTexture_;
 
 	float radius_;
 
-	sf::Sprite test;
 
 	
 	int scores_;
