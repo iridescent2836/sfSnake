@@ -12,13 +12,19 @@ Fruit::Fruit(sf::Vector2f position,int color)
 	shape_.setRadius(Fruit::Radius);
 	switch(color){
 		case 0: 
-			shape_.setFillColor(sf::Color::Red);
+			shape_.setFillColor(sf::Color::Black);
 			break;
 		case 1:
-			shape_.setFillColor(sf::Color::Blue);
+			shape_.setFillColor({165,42,42}); //brown
 			break;
 		case 2:
-			shape_.setFillColor(sf::Color::Magenta);
+			shape_.setFillColor(sf::Color::Green);
+			break;
+		case 3:
+			shape_.setFillColor(sf::Color::Blue);
+			break;
+		case 4:
+			shape_.setFillColor(sf::Color::Red);
 			break;
 		default:
 			shape_.setFillColor(sf::Color::Red);
@@ -32,7 +38,7 @@ void Fruit::render(sf::RenderWindow& window)
 	window.draw(shape_);
 }
 
-void Fruit::setColor(const sf::Color color){
+void Fruit::setColor(const sf::Color& color){
 	shape_.setFillColor(color);
 }
 

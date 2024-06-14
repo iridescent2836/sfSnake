@@ -11,12 +11,17 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f / 10.f);
 
 std::shared_ptr<Screen> Game::Screen = std::make_shared<MenuScreen>();
 
+int Game::backGround = 0;
+bool Game::isGrid = false;
+
 Game::Game()
 : window_(sf::VideoMode(Game::Width, Game::Height), "sfSnake")
 {
 	bgMusic_.openFromFile("Music/bg_music.wav");
 	bgMusic_.setLoop(true);
 	bgMusic_.play();
+
+	
 }
 
 void Game::handleInput()

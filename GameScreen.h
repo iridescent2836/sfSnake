@@ -20,7 +20,13 @@ public:
 	void update(sf::Time delta) override;
 	void render(sf::RenderWindow& window) override;
 
-	void generateFruit(int numberOfFruits);
+	void generateFruit(sf::Color color);
+	void renderGrid(sf::RenderWindow& window);
+	void renderBackground(sf::RenderWindow& window);
+	void initializeFruits();
+	void initBalls();
+	void updateBalls();
+	void renderBalls(sf::RenderWindow& window);
 
 private:
 	Snake snake_;
@@ -29,9 +35,24 @@ private:
 	sf::Text scores_;
 	sf::Font font_;
 
+	int numberOfFruits_;
+
+	sf::RectangleShape gridVline;   // Verical line
+    sf::RectangleShape gridHline;   // Horizon Line
 
 	sf::Sprite background_;
 	sf::Texture backgroundTexture_;
+
+	sf::CircleShape snowball_;
+	std::vector<sf::CircleShape> snowballs_;
+	sf::Texture snowballTexture_;
+
+	sf::CircleShape fireball_;
+	std::vector<sf::CircleShape> fireballs_;
+	sf::Texture fireballTexture_;
+
+	const float ballRadius_ = 20.f;
+	const int ballNum_ = 3;
 
 	static std::default_random_engine engine;
 	static std::uniform_int_distribution<int> xDistribution;

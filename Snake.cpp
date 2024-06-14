@@ -141,7 +141,7 @@ inline float dis(const sf::Vector2f & node1,const sf::Vector2f & node2){
 }
 
 
-void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
+sf::Color Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 {
 	decltype(fruits.begin()) toRemove = fruits.end();
 
@@ -163,22 +163,77 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 		pickupSound_.play();
 		const sf::Color & color = toRemove->getColor();
 		if(color == sf::Color::Red){
-			++scores_;
+			scores_+=3;
+			grow();
+			grow();
+			grow();
+
+			
 		}
 		else if(color == sf::Color::Blue){
 			scores_ += 2;
+			grow();
+			grow();
 		}
-		else if(color == sf::Color::Magenta){
-			scores_ += 3;
+		else if(color == sf::Color::Green){
+			++scores_;
+			grow();
 		}
 		//an egg.
 		else if(color == sf::Color::Yellow){
 			scores_ += 50;
 		}
-		grow();
+	
 		fruits.erase(toRemove);
+		// return color;
+		return color;
+	}
+	//no fruit collided
+	return sf::Color::Transparent;
+}
+
+void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vector<sf::CircleShape>& fireballs){
+	//snowball check
+	decltype(snowballs.begin()) snowballToRemove = snowballs.end();
+	for (auto it = snowballs.begin(); it != snowballs.end() ; ++it)
+	{
+		if(it->getGlobalBounds().intersects(nodes_[0].getGlobalBounds())){
+			snowballToRemove = it;
+		}
+	}
+	if (snowballToRemove != snowballs.end())
+	{
+		pickupSound_.play();
+		//加分，且只增长一个节点
+		scores_ += 10;
+		grow();
+		snowballs.erase(snowballToRemove);
+	}
+	//
+	decltype(fireballs.begin()) fireballToRemove = fireballs.end();
+	for (auto it = fireballs.begin(); it != fireballs.end() ; ++it)
+	{
+		if(it->getGlobalBounds().intersects(nodes_[0].getGlobalBounds())){
+			fireballToRemove = it;
+		}
+	}
+	if (fireballToRemove != fireballs.end())
+	{
+		pickupSound_.play();
+		//不加分，但减少三个节点
+		if(nodes_.size() > 3){
+			nodes_.pop_back();
+			nodes_.pop_back();
+			nodes_.pop_back();
+		}
+		else{
+			hitSelf_ = true;
+		}
+		fireballs.erase(fireballToRemove);
 	}
 }
+
+
 
 void Snake::grow()
 {

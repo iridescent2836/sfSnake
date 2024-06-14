@@ -25,7 +25,8 @@ public:
 	void update(sf::Time delta);
 	void render(sf::RenderWindow& window);
 
-	void checkFruitCollisions(std::vector<Fruit>& fruits);
+	sf::Color checkFruitCollisions(std::vector<Fruit>& fruits);
+	void checkBallCollisions(std::vector<sf::CircleShape>& snwoballs,std::vector<sf::CircleShape>& fireballs);
 
 	bool hitSelf() const;
 

@@ -15,6 +15,8 @@ public:
 	void handleInput(sf::RenderWindow& window) override;
 	void update(sf::Time delta) override;
 	void render(sf::RenderWindow& window) override;
+	void checkButtonPress(sf::RenderWindow& window);
+	void initButtons();
 
 private:
 	sf::Font font_;
@@ -23,11 +25,25 @@ private:
 	sf::Texture backgroundTexture_;
 	sf::Sprite backgroundSprite_;
 
+	sf::RectangleShape backGroundButton1_;
+	sf::RectangleShape backGroundButton2_;
+	sf::RectangleShape backGroundButton3_;
+	sf::RectangleShape backGroundButton4_;
+	sf::RectangleShape gridButton_;
+
+	sf::Texture backGroundButton1Texture_;
+	sf::Texture backGroundButton2Texture_;
+	sf::Texture backGroundButton3Texture_;
+	sf::Texture backGroundButton4Texture_;
+	sf::Texture gridButtonTexture_;
+
+	sf::Text gridText_;
 
 	bool isGameScreenBotton1Pressed_ = false;
 	bool isGameScreenBotton2Pressed_ = false;
 	bool isSnakeButton1Pressed_ = false;
 	bool isSnakeButton2Pressed_ = false;
+	
 };
 }
 
