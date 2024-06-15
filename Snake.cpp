@@ -233,6 +233,8 @@ void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vec
 			// nodes_.pop_back();
 		}
 		else{
+			dieSound_.play();
+			sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
 			hitSelf_ = true;
 		}
 		fireballs.erase(fireballToRemove);
@@ -242,6 +244,8 @@ void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vec
 	{
 		for(auto node : nodes_){
 			if(dis(node.getPosition(),lavaball.getPosition()) < lavaball.getRadius() + radius_*0.75){
+				dieSound_.play();
+				sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
 				hitSelf_ = true;
 			}
 		}
