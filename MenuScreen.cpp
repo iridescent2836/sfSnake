@@ -9,10 +9,8 @@
 
 using namespace sfSnake;
 
-MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 20, Game::Height / 20)), 
-						   backGroundButton2_(sf::Vector2f(Game::Width / 20, Game::Height / 20)),
-						   backGroundButton3_(sf::Vector2f(Game::Width / 20, Game::Height / 20)), 
-						   backGroundButton4_(sf::Vector2f(Game::Width / 20, Game::Height / 20)), 
+MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 10, Game::Height / 10)), 
+
 						   gridButton_(sf::Vector2f(Game::Width / 11, Game::Height / 20))
 {
 	//set font
@@ -20,8 +18,9 @@ MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 20, Gam
 	// set up text
 	text_.setFont(font_);
 	text_.setString(
-		"\n\n\n\n\n\n\nPress [SPACE] to play"
-		"\n\nPress [ESC] to quit");
+		"\n\n\n\n\nPress [SPACE] to play"
+		"\n\nPress [ESC] to quit"
+		"\n\nPress [enter] to change game level");
 	text_.setFillColor(sf::Color::White);
 	text_.setOutlineColor(sf::Color::Black);
 	text_.setOutlineThickness(2);
@@ -58,43 +57,29 @@ MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 20, Gam
 }
 
 void MenuScreen::initButtons(){
+	if(Game::backGround == 0)
+		backGroundButton1Texture_.loadFromFile("Backgrounds/white.png");
+	else if(Game::backGround == 1)
+		backGroundButton1Texture_.loadFromFile("Backgrounds/black.png");
+	else if(Game::backGround == 2)
+		backGroundButton1Texture_.loadFromFile("Backgrounds/orange.png");
+	else if(Game::backGround == 3)
+		backGroundButton1Texture_.loadFromFile("Backgrounds/snow.png");
 
-	backGroundButton1Texture_.loadFromFile("Backgrounds/white.png");
-	backGroundButton2Texture_.loadFromFile("Backgrounds/black.png");
-	backGroundButton3Texture_.loadFromFile("Backgrounds/orange.png");
-	backGroundButton4Texture_.loadFromFile("Backgrounds/snow.png");
-	gridButtonTexture_.loadFromFile("Backgrounds/grid.png");
 
 	sf::Vector2f buttonSize(Game::Width / 20, Game::Height / 20);
 
 	backGroundButton1_.setTexture(&backGroundButton1Texture_);
-	// backGroundButton1_.setScale(buttonSize.x / float(backGroundButton1Texture_.getSize().x), buttonSize.y / float(backGroundButton1Texture_.getSize().y));
 	backGroundButton1_.setPosition(buttonSize.x,buttonSize.y);	
 	backGroundButton1_.setOutlineColor(sf::Color::Yellow);
 	backGroundButton1_.setOutlineThickness(2);
 	
-	
-	backGroundButton2_.setTexture(&backGroundButton2Texture_);	
-	// backGroundButton2_.setScale(buttonSize.x / float(backGroundButton2Texture_.getSize().x),buttonSize.y / float(backGroundButton2Texture_.getSize().y));
-	backGroundButton2_.setPosition(buttonSize.x * 3, buttonSize.y );	
-	backGroundButton2_.setOutlineColor(sf::Color::White);
-	backGroundButton2_.setOutlineThickness(2);
 
-	backGroundButton3_.setTexture(&backGroundButton3Texture_);
-	// backGroundButton3_.setScale(buttonSize.x / float(backGroundButton3Texture_.getSize().x), buttonSize.y / float(backGroundButton3Texture_.getSize().y));
-	backGroundButton3_.setPosition(buttonSize.x , buttonSize.y  * 3);	
-	backGroundButton3_.setOutlineColor(sf::Color::White);
-	backGroundButton3_.setOutlineThickness(2);
 
-	backGroundButton4_.setTexture(&backGroundButton4Texture_);
-	// backGroundButton4_.setScale(buttonSize.x / float(backGroundButton4Texture_.getSize().x), buttonSize.y / float(backGroundButton4Texture_.getSize().y));
-	backGroundButton4_.setPosition(buttonSize.x  * 3, buttonSize.y  * 3);	
-	backGroundButton4_.setOutlineColor(sf::Color::White);
-	backGroundButton4_.setOutlineThickness(2);
 
 	// gridButton_.setTexture(&gridButtonTexture_);
 	gridButton_.setFillColor(sf::Color::Transparent);
-	gridButton_.setPosition(buttonSize.x   , buttonSize.y  * 5);	
+	gridButton_.setPosition(buttonSize.x   , buttonSize.y  * 4);	
 	gridButton_.setOutlineColor(sf::Color::Transparent);
 	gridButton_.setOutlineThickness(2);
 
@@ -105,7 +90,7 @@ void MenuScreen::initButtons(){
 	gridText_.setOutlineThickness(2);
 	gridText_.setCharacterSize(Game::Width / 30);
 	gridText_.setStyle(sf::Text::Bold);
-	gridText_.setPosition(buttonSize.x   , buttonSize.y  * 5);
+	gridText_.setPosition(gridButton_.getPosition());
 
 
 }
@@ -121,51 +106,51 @@ void MenuScreen::handleInput(sf::RenderWindow& window)
 
 void MenuScreen::checkButtonPress(sf::RenderWindow& window){
 	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	if (backGroundButton1_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	int backGournd = Game::backGround;
+	if (backGroundButton1_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && backGournd == 3)
 	{
-		backGroundButton1_.setOutlineColor(sf::Color::Yellow);
-		backGroundButton2_.setOutlineColor(sf::Color::White);
-		backGroundButton3_.setOutlineColor(sf::Color::White);
-		backGroundButton4_.setOutlineColor(sf::Color::White);
-	
+		backGroundButton1Texture_.loadFromFile("Backgrounds/white.png");
+		// backGroundButton1_.setTexture(&backGroundButton1Texture_);
 		Game::backGround = 0;
 	}
-	else if (backGroundButton2_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	else if (backGroundButton1_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && backGournd == 0)
 	{
-		backGroundButton1_.setOutlineColor(sf::Color::White);
-		backGroundButton2_.setOutlineColor(sf::Color::Yellow);
-		backGroundButton3_.setOutlineColor(sf::Color::White);
-		backGroundButton4_.setOutlineColor(sf::Color::White);
-
+		backGroundButton1Texture_.loadFromFile("Backgrounds/black.png");
+		// backGroundButton1_.setTexture(&backGroundButton2Texture_);
 		Game::backGround = 1;
 	}
-	else if (backGroundButton3_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	else if (backGroundButton1_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && backGournd == 1)
 	{
-		backGroundButton1_.setOutlineColor(sf::Color::White);
-		backGroundButton2_.setOutlineColor(sf::Color::White);
-		backGroundButton3_.setOutlineColor(sf::Color::Yellow);
-		backGroundButton4_.setOutlineColor(sf::Color::White);
-
+		backGroundButton1Texture_.loadFromFile("Backgrounds/orange.png");
+		// backGroundButton1_.setTexture(&backGroundButton3Texture_);
 		Game::backGround = 2;
 	}
-	else if (backGroundButton4_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	else if (backGroundButton1_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && backGournd == 2)
 	{
-		backGroundButton1_.setOutlineColor(sf::Color::White);
-		backGroundButton2_.setOutlineColor(sf::Color::White);
-		backGroundButton3_.setOutlineColor(sf::Color::White);
-		backGroundButton4_.setOutlineColor(sf::Color::Yellow);
-
+		backGroundButton1Texture_.loadFromFile("Backgrounds/snow.png");
+		// backGroundButton1_.setTexture(&backGroundButton4Texture_);
 		Game::backGround = 3;
 	}
 
+	///////////////Grid Button/////////////////
+	//BUGGGGGGGG!!!!!
+	//you CANNOT use 
+	//if(gridText_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && Game::isGrid == false)
+	//or the gamescreen cannot be rendered
+	//so I use the following code instead
 	if(gridButton_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && Game::isGrid == false)
 	{
-		gridButton_.setOutlineColor(sf::Color::Yellow);
+		gridText_.setString("Grid!");
+		gridText_.setFillColor(sf::Color::Black);
+		gridText_.setOutlineColor(sf::Color::White);
+
 		Game::isGrid = true;
 	}
 	else if(gridButton_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && Game::isGrid == true)
 	{
-		gridButton_.setOutlineColor(sf::Color::Transparent);
+		gridText_.setString("Grid?");
+		gridText_.setFillColor(sf::Color::White);
+		gridText_.setOutlineColor(sf::Color::Black);
 		Game::isGrid = false;
 	}
 	
@@ -210,9 +195,7 @@ void MenuScreen::render(sf::RenderWindow& window)
 	window.draw(snakeText_);
 
 	window.draw(backGroundButton1_);
-	window.draw(backGroundButton2_);
-	window.draw(backGroundButton3_);
-	window.draw(backGroundButton4_);
+
 	window.draw(gridButton_);
 	window.draw(gridText_);
 }

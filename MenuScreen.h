@@ -26,15 +26,13 @@ private:
 	sf::Sprite backgroundSprite_;
 
 	sf::RectangleShape backGroundButton1_;
-	sf::RectangleShape backGroundButton2_;
-	sf::RectangleShape backGroundButton3_;
-	sf::RectangleShape backGroundButton4_;
+	// sf::RectangleShape backGroundButton3_;
+	// sf::RectangleShape backGroundButton4_;
 	sf::RectangleShape gridButton_;
 
 	sf::Texture backGroundButton1Texture_;
-	sf::Texture backGroundButton2Texture_;
-	sf::Texture backGroundButton3Texture_;
-	sf::Texture backGroundButton4Texture_;
+	
+	//just to mark the bounds of gridtext
 	sf::Texture gridButtonTexture_;
 
 	sf::Text gridText_;

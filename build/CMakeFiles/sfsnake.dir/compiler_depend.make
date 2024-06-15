@@ -862,7 +862,8 @@ CMakeFiles/sfsnake.dir/GameOverScreen.cpp.obj: D:/codeProject/sfSnake/GameOverSc
   D:/codeProject/sfSnake/Snake.h \
   D:/codeProject/sfSnake/SnakeNode.h \
   D:/codeProject/sfSnake/Fruit.h \
-  D:/codeProject/sfSnake/GameOverScreen.h
+  D:/codeProject/sfSnake/GameOverScreen.h \
+  D:/codeProject/sfSnake/MenuScreen.h
 
 CMakeFiles/sfsnake.dir/GameScreen.cpp.obj: D:/codeProject/sfSnake/GameScreen.cpp \
   _deps/sfml-src/include/SFML/Graphics.hpp \

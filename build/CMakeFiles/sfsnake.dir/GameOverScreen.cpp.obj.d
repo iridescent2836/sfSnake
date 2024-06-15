@@ -314,4 +314,5 @@ CMakeFiles/sfsnake.dir/GameOverScreen.cpp.obj: \
  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/bits/stl_numeric.h \
  D:/codeConfiguration/mingw64_new/include/c++/13.0.1/pstl/glue_numeric_defs.h \
  D:\codeProject\sfSnake\Snake.h D:\codeProject\sfSnake\SnakeNode.h \
- D:\codeProject\sfSnake\Fruit.h D:\codeProject\sfSnake\GameOverScreen.h
+ D:\codeProject\sfSnake\Fruit.h D:\codeProject\sfSnake\GameOverScreen.h \
+ D:\codeProject\sfSnake\MenuScreen.h
