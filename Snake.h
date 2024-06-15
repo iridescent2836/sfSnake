@@ -26,11 +26,14 @@ public:
 	void render(sf::RenderWindow& window);
 
 	sf::Color checkFruitCollisions(std::vector<Fruit>& fruits);
-	void checkBallCollisions(std::vector<sf::CircleShape>& snwoballs,std::vector<sf::CircleShape>& fireballs);
+	void checkBallCollisions(std::vector<sf::CircleShape>& snwoballs,std::vector<sf::CircleShape>& fireballs,sf::CircleShape& lavaball);
 
 	bool hitSelf() const;
 
 	int getScores() const;
+
+	sf::Vector2f getHeadPosition() const;
+
 
 	unsigned getSize() const;
 

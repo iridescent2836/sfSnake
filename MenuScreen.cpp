@@ -10,7 +10,6 @@
 using namespace sfSnake;
 
 MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 10, Game::Height / 10)), 
-
 						   gridButton_(sf::Vector2f(Game::Width / 11, Game::Height / 20))
 {
 	//set font
@@ -20,7 +19,7 @@ MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 10, Gam
 	text_.setString(
 		"\n\n\n\n\nPress [SPACE] to play"
 		"\n\nPress [ESC] to quit"
-		"\n\nPress [enter] to change game level");
+		);
 	text_.setFillColor(sf::Color::White);
 	text_.setOutlineColor(sf::Color::Black);
 	text_.setOutlineThickness(2);
@@ -54,6 +53,31 @@ MenuScreen::MenuScreen() : backGroundButton1_(sf::Vector2f(Game::Width / 10, Gam
 	backgroundSprite_.setScale(Game::Width / float(backgroundTexture_.getSize().x), Game::Height / float(backgroundTexture_.getSize().y));
 	backgroundSprite_.setPosition(0, 0);
 	initButtons();
+
+
+	gameLevelText_.setFont(font_);
+	gameLevelText_.setCharacterSize(Game::Width / 30);
+	gameLevelText_.setFillColor(sf::Color::White);
+	gameLevelText_.setOutlineColor(sf::Color::Black);
+	gameLevelText_.setOutlineThickness(2);
+	gameLevelText_.setStyle(sf::Text::Bold);
+	
+	if(Game::gameLevel == 0){
+		gameLevelText_.setString("Game Level: Easy");
+	}
+	else if(Game::gameLevel == 1){
+		gameLevelText_.setString("Game Level: Normal");
+	}
+	else if(Game::gameLevel == 2){
+		gameLevelText_.setString("Game Level: Hard");
+	}
+	gameLevelText_.setPosition(Game::Width - backGroundButton1_.getPosition().x - gameLevelText_.getGlobalBounds().width, 
+							   backGroundButton1_.getPosition().y );
+
+	gameLevelBound_.setSize( {gameLevelText_.getGlobalBounds().width, gameLevelText_.getGlobalBounds().height});
+	gameLevelBound_.setPosition(gameLevelText_.getPosition());
+	gameLevelBound_.setFillColor(sf::Color::Transparent);
+
 }
 
 void MenuScreen::initButtons(){
@@ -79,14 +103,23 @@ void MenuScreen::initButtons(){
 
 	// gridButton_.setTexture(&gridButtonTexture_);
 	gridButton_.setFillColor(sf::Color::Transparent);
-	gridButton_.setPosition(buttonSize.x   , buttonSize.y  * 4);	
+	gridButton_.setPosition(Game::Width - backGroundButton1_.getPosition().x - buttonSize.x *3 , buttonSize.y  * 2);	
 	gridButton_.setOutlineColor(sf::Color::Transparent);
 	gridButton_.setOutlineThickness(2);
 
 	gridText_.setFont(font_);
-	gridText_.setString("Grid?");
-	gridText_.setFillColor(sf::Color::White);
-	gridText_.setOutlineColor(sf::Color::Black);
+	if(Game::isGrid == false)
+	{
+		gridText_.setString("Grid?");
+		gridText_.setFillColor(sf::Color::White);
+		gridText_.setOutlineColor(sf::Color::Black);
+	}
+	else
+	{
+		gridText_.setString("Grid!");
+		gridText_.setFillColor(sf::Color::Black);
+		gridText_.setOutlineColor(sf::Color::White);
+	}
 	gridText_.setOutlineThickness(2);
 	gridText_.setCharacterSize(Game::Width / 30);
 	gridText_.setStyle(sf::Text::Bold);
@@ -154,7 +187,22 @@ void MenuScreen::checkButtonPress(sf::RenderWindow& window){
 		Game::isGrid = false;
 	}
 	
-	
+	if(gameLevelBound_.getGlobalBounds().contains(mousePos.x, mousePos.y) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		if(Game::gameLevel == 0)
+			Game::gameLevel = 1;
+		else if(Game::gameLevel == 1)
+			Game::gameLevel = 2;
+		else if(Game::gameLevel == 2)
+			Game::gameLevel = 0;
+
+		if(Game::gameLevel == 0)
+			gameLevelText_.setString("Game Level: Easy");
+		else if(Game::gameLevel == 1)
+			gameLevelText_.setString("Game Level: normal");
+		else if(Game::gameLevel == 2)
+			gameLevelText_.setString("Game Level: Hard");	
+	}
 }
 
 void MenuScreen::update(sf::Time delta)
@@ -198,4 +246,6 @@ void MenuScreen::render(sf::RenderWindow& window)
 
 	window.draw(gridButton_);
 	window.draw(gridText_);
+	window.draw(gameLevelText_);
+	window.draw(gameLevelBound_);
 }

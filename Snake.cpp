@@ -133,6 +133,12 @@ void Snake::update(sf::Time delta)
 	move();
 	checkEdgeCollisions();
 	checkSelfCollisions();
+	//move faster
+	if(Game::gameLevel != 0){
+		move();
+		checkEdgeCollisions();
+		checkSelfCollisions();
+	}
 }
 
 inline float dis(const sf::Vector2f & node1,const sf::Vector2f & node2){
@@ -192,7 +198,7 @@ sf::Color Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 	return sf::Color::Transparent;
 }
 
-void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vector<sf::CircleShape>& fireballs){
+void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vector<sf::CircleShape>& fireballs, sf::CircleShape& lavaball){
 	//snowball check
 	decltype(snowballs.begin()) snowballToRemove = snowballs.end();
 	for (auto it = snowballs.begin(); it != snowballs.end() ; ++it)
@@ -220,16 +226,25 @@ void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vec
 	if (fireballToRemove != fireballs.end())
 	{
 		pickupSound_.play();
-		//不加分，但减少三个节点
-		if(nodes_.size() > 3){
+		//不加分，但减少1个节点
+		if(nodes_.size() > 2){
 			nodes_.pop_back();
-			nodes_.pop_back();
-			nodes_.pop_back();
+			// nodes_.pop_back();
+			// nodes_.pop_back();
 		}
 		else{
 			hitSelf_ = true;
 		}
 		fireballs.erase(fireballToRemove);
+	}
+	//lavaball check
+	if(Game::gameLevel == 2)
+	{
+		for(auto node : nodes_){
+			if(dis(node.getPosition(),lavaball.getPosition()) < lavaball.getRadius() + radius_*0.75){
+				hitSelf_ = true;
+			}
+		}
 	}
 }
 
@@ -334,6 +349,11 @@ int Snake::getScores() const
 {
 	return scores_;
 }
+
+sf::Vector2f Snake::getHeadPosition() const{
+	return nodes_[0].getPosition();
+}
+
 
 void Snake::render(sf::RenderWindow& window)
 {

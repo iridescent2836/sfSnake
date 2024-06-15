@@ -13,6 +13,7 @@ std::shared_ptr<Screen> Game::Screen = std::make_shared<MenuScreen>();
 
 int Game::backGround = 0;
 bool Game::isGrid = false;
+int Game::gameLevel = 0;
 
 Game::Game()
 : window_(sf::VideoMode(Game::Width, Game::Height), "sfSnake")

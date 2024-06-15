@@ -26,16 +26,14 @@ private:
 	sf::Sprite backgroundSprite_;
 
 	sf::RectangleShape backGroundButton1_;
-	// sf::RectangleShape backGroundButton3_;
-	// sf::RectangleShape backGroundButton4_;
 	sf::RectangleShape gridButton_;
-
 	sf::Texture backGroundButton1Texture_;
-	
 	//just to mark the bounds of gridtext
 	sf::Texture gridButtonTexture_;
-
 	sf::Text gridText_;
+
+	sf::Text gameLevelText_;
+	sf::RectangleShape gameLevelBound_;
 
 	bool isGameScreenBotton1Pressed_ = false;
 	bool isGameScreenBotton2Pressed_ = false;

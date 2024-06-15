@@ -40,8 +40,14 @@ GameScreen::GameScreen() : snake_(),numberOfFruits_(10),gridVline(sf::Vector2f(G
 	background_.setPosition(0,0);
 
 	//set snowball and fireball textures
-	snowballTexture_.loadFromFile("Elements/snowball.png");
-	fireballTexture_.loadFromFile("Elements/fireball.png");
+	snowballTexture_.loadFromFile("Elements/snowball.jpg");
+	fireballTexture_.loadFromFile("Elements/fireball.jpg");
+
+	lavaballTexture_.loadFromFile("Elements/lavaball.jpg");
+	lavaball_.setTexture(&lavaballTexture_);
+	lavaball_.setRadius(ballRadius_);
+	lavaball_.setOrigin(ballRadius_, ballRadius_);
+	lavaball_.setPosition(xDistribution(engine), yDistribution(engine));
 
 	initializeFruits();	
 	initBalls();
@@ -83,6 +89,14 @@ void GameScreen::handleInput(sf::RenderWindow& window)
 	snake_.handleInput(window);
 }
 
+void GameScreen::fireballMove(sf::Time delta){
+	float direction = atan2(snake_.getHeadPosition().y - lavaball_.getPosition().y, snake_.getHeadPosition().x - lavaball_.getPosition().x);
+	float speed = 200.0f;
+	sf::Vector2f velocity(cos(direction) * speed, sin(direction) * speed);
+	lavaball_.move(velocity * delta.asSeconds());
+
+}
+
 void GameScreen::update(sf::Time delta)
 {
 
@@ -97,8 +111,14 @@ void GameScreen::update(sf::Time delta)
 	}
 
 	snake_.update(delta);	//move and check collison
+	//hard mode
+	if(Game::gameLevel == 2)
+	{
+		fireballMove(delta);
+	}
+
 	sf::Color color = snake_.checkFruitCollisions(fruit_);	//check fruit collision and grow if needed
-	snake_.checkBallCollisions(snowballs_, fireballs_);	//check ball collision
+	snake_.checkBallCollisions(snowballs_, fireballs_, lavaball_);	//check ball collision
 
 	updateBalls();
 
@@ -214,6 +234,9 @@ void GameScreen::render(sf::RenderWindow& window)
 	renderBalls(window);
 
 	window.draw(scores_);
+	if(Game::gameLevel == 2){
+		window.draw(lavaball_);
+	}
 
 }
 

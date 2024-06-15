@@ -27,6 +27,8 @@ public:
 	void initBalls();
 	void updateBalls();
 	void renderBalls(sf::RenderWindow& window);
+	void fireballMove(sf::Time delta);
+
 
 private:
 	Snake snake_;
@@ -43,15 +45,16 @@ private:
 	sf::Sprite background_;
 	sf::Texture backgroundTexture_;
 
-	sf::CircleShape snowball_;
 	std::vector<sf::CircleShape> snowballs_;
 	sf::Texture snowballTexture_;
 
-	sf::CircleShape fireball_;
 	std::vector<sf::CircleShape> fireballs_;
 	sf::Texture fireballTexture_;
 
-	const float ballRadius_ = 20.f;
+	sf::CircleShape lavaball_;
+	sf::Texture lavaballTexture_;
+
+	const float ballRadius_ = 15.f;
 	const int ballNum_ = 3;
 
 	static std::default_random_engine engine;

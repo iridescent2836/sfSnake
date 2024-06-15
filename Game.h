@@ -27,6 +27,8 @@ public:
 
 	static std::shared_ptr<Screen> Screen;
 
+	static int gameLevel; //1:easy, 2:normal, 3:hard
+
 
 	static int backGround; //1:black, 0:white, 2:orange, 3:snow
 	static bool isGrid;  //0:no grid, 1:grid
