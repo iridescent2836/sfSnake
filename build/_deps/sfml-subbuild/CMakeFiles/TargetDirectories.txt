@@ -1,3 +1,0 @@
-D:/codeProject/sfSnake/build/_deps/sfml-subbuild/CMakeFiles/sfml-populate.dir
-D:/codeProject/sfSnake/build/_deps/sfml-subbuild/CMakeFiles/edit_cache.dir
-D:/codeProject/sfSnake/build/_deps/sfml-subbuild/CMakeFiles/rebuild_cache.dir

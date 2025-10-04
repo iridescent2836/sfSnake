@@ -199,7 +199,7 @@ void MenuScreen::checkButtonPress(sf::RenderWindow& window){
 		if(Game::gameLevel == 0)
 			gameLevelText_.setString("Game Level: Easy");
 		else if(Game::gameLevel == 1)
-			gameLevelText_.setString("Game Level: normal");
+			gameLevelText_.setString("Game Level: Normal");
 		else if(Game::gameLevel == 2)
 			gameLevelText_.setString("Game Level: Hard");	
 	}

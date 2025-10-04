@@ -211,7 +211,10 @@ void Snake::checkBallCollisions(std::vector<sf::CircleShape>& snowballs,std::vec
 	{
 		pickupSound_.play();
 		//加分，且只增长一个节点
-		scores_ += 10;
+		if(Game::gameLevel == 0)
+			scores_ += 10;
+		else
+			scores_ += 5;
 		grow();
 		snowballs.erase(snowballToRemove);
 	}
